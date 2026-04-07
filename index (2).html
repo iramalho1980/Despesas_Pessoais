@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Projetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --accent-yellow: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-red: #e74c3c;
+            --shadow-yellow: 0 0 12px rgba(241, 196, 15, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #2c3e50;
+            background: -webkit-linear-gradient(to right, #3498db, #2c3e50);
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: var(--text-color);
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 10px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-yellow);
+            text-shadow: var(--shadow-yellow);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-actions i {
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.3s;
+            padding: 5px;
+        }
+
+        .header-actions i:hover {
+            opacity: 1;
+            color: var(--accent-yellow);
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .collapsible .card-content {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .collapsible.expanded .card-content {
+            max-height: 1000px;
+            opacity: 1;
+            margin-top: 15px;
+            pointer-events: auto;
+        }
+
+        .header-title {
+            color: var(--accent-yellow);
+            font-weight: 400;
+            text-transform: uppercase;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(241, 196, 15, 0.15);
+            text-shadow: var(--shadow-yellow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .header-title i.toggle-icon {
+            transition: transform 0.3s ease;
+            font-size: 10px;
+            opacity: 0.5;
+        }
+
+        .expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        input, button {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input::placeholder { color: rgba(255,255,255,0.4); }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.15);
+        }
+
+        button {
+            cursor: pointer;
+            background: rgba(52, 152, 219, 0.2);
+            font-weight: 400;
+        }
+
+        button:hover {
+            background: rgba(52, 152, 219, 0.35);
+            transform: translateY(-1px);
+        }
+
+        button.btn-yellow {
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+        }
+
+        button.btn-yellow:hover {
+            background: rgba(241, 196, 15, 0.25);
+        }
+
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .item-list {
+            list-style: none;
+        }
+
+        .item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .item-info strong { font-weight: 400; }
+
+        .item-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .item-actions i {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .item-actions i:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .fa-edit { color: #3498db; }
+        .fa-trash { color: #e74c3c; }
+        .fa-check-circle, .fa-undo { color: #2ecc71; }
+
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .total-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .total-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .val-receita { color: var(--accent-green); }
+        .val-despesa { color: var(--accent-red); }
+        .val-saldo { color: var(--accent-yellow); }
+
+        /* Interactive Spinner / Progress */
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .circular-progress {
+            position: relative;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-red) 0deg, var(--accent-green) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.8s ease;
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
+        }
+
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            height: 125px;
+            width: 125px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+        }
+
+        .progress-content {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .progress-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            text-shadow: var(--shadow-yellow);
+            display: block;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .status-superavit { background: rgba(46, 204, 113, 0.2); color: var(--accent-green); }
+        .status-deficit { background: rgba(231, 76, 60, 0.2); color: var(--accent-red); }
+
+        .percent-details {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 11px;
+        }
+
+        .percent-item {
+            text-align: center;
+        }
+
+        .percent-item span {
+            display: block;
+            font-weight: 700;
+        }
+
+        #fileInput { display: none; }
+
+        .small-text {
+            font-size: 11px;
+            opacity: 0.6;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">e-Projetos</div>
+        <div class="header-actions">
+            <i class="fas fa-download" onclick="exportJSON()" title="Exportar Backup JSON"></i>
+            <i class="fas fa-upload" onclick="document.getElementById('fileInput').click()" title="Importar Backup JSON"></i>
+            <input type="file" id="fileInput" accept=".json" onchange="importJSON(event)">
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="kanban-board">
+            <div class="glass-card collapsible" id="card-1">
+                <div class="header-title" onclick="toggleCard('card-1')">
+                    Lançar Receita <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <input type="text" id="recDesc" placeholder="Descrição" style="flex: 2;">
+                        <input type="number" id="recVal" placeholder="Valor" style="flex: 1;">
+                        <button onclick="addReceita()" class="btn-yellow">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card collapsible" id="card-2">
+                <div class="header-title" onclick="toggleCard('card-2')">
+                    Lançar Despesa <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <input type="text" id="despDesc" placeholder="Descrição" style="flex: 2;">
+                        <input type="number" id="despVal" placeholder="Valor" style="flex: 1;">
+                        <button onclick="addDespesa()" class="btn-yellow">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card collapsible progress-container" id="card-3">
+                <div class="header-title" style="width: 100%;" onclick="toggleCard('card-3')">
+                    Painel de Controle <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content" style="text-align: center; width: 100%;">
+                    <div class="circular-progress" id="spinner" style="margin: 0 auto;">
+                        <div class="progress-content">
+                            <span class="progress-value" id="percentText">0%</span>
+                            <span id="statusBadge" class="status-badge">Aguardando</span>
+                        </div>
+                    </div>
+                    <div class="percent-details">
+                        <div class="percent-item">
+                            <span class="val-receita" id="recPercent">0%</span>
+                            Receitas
+                        </div>
+                        <div class="percent-item">
+                            <span class="val-despesa" id="despPercent">0%</span>
+                            Despesas
+                        </div>
+                    </div>
+                    <p class="small-text" id="progressLabel" style="margin-top: 10px;">Comprometimento da Renda</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="kanban-board">
+            <div class="glass-card collapsible" id="card-4">
+                <div class="header-title" onclick="toggleCard('card-4')">
+                    Receitas Lançadas <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content">
+                    <div id="listaReceitas" class="item-list"></div>
+                </div>
+            </div>
+
+            <div class="glass-card collapsible" id="card-5">
+                <div class="header-title" onclick="toggleCard('card-5')">
+                    Despesas Pendentes <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content">
+                    <div id="listaDespesas" class="item-list"></div>
+                </div>
+            </div>
+
+            <div class="glass-card collapsible" id="card-6">
+                <div class="header-title" onclick="toggleCard('card-6')">
+                    Despesas Pagas <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-content">
+                    <div id="listaPagas" class="item-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="totals-grid">
+            <div class="glass-card total-card">
+                <div class="header-title" style="cursor: default; border: none;">Total Receitas</div>
+                <div class="total-value val-receita" id="totalRec">R$ 0,00</div>
+            </div>
+            <div class="glass-card total-card">
+                <div class="header-title" style="cursor: default; border: none;">Total Despesas</div>
+                <div class="total-value val-despesa" id="totalDesp">R$ 0,00</div>
+            </div>
+            <div class="glass-card total-card">
+                <div class="header-title" style="cursor: default; border: none;">Saldo Atual</div>
+                <div class="total-value val-saldo" id="totalSaldo">R$ 0,00</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let data = {
+            receitas: [],
+            despesas: []
+        };
+
+        function toggleCard(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('eProjetosData');
+            if (saved) {
+                data = JSON.parse(saved);
+                render();
+            }
+        };
+
+        function saveData() {
+            localStorage.setItem('eProjetosData', JSON.stringify(data));
+            render();
+        }
+
+        function addReceita() {
+            const desc = document.getElementById('recDesc').value;
+            const val = parseFloat(document.getElementById('recVal').value);
+            if (desc && val) {
+                data.receitas.push({ id: Date.now(), desc, val });
+                document.getElementById('recDesc').value = '';
+                document.getElementById('recVal').value = '';
+                saveData();
+            }
+        }
+
+        function addDespesa() {
+            const desc = document.getElementById('despDesc').value;
+            const val = parseFloat(document.getElementById('despVal').value);
+            if (desc && val) {
+                data.despesas.push({ id: Date.now(), desc, val, paga: false });
+                document.getElementById('despDesc').value = '';
+                document.getElementById('despVal').value = '';
+                saveData();
+            }
+        }
+
+        function deleteItem(type, id) {
+            if (confirm("Deseja realmente excluir este item?")) {
+                if (type === 'receita') {
+                    data.receitas = data.receitas.filter(i => i.id !== id);
+                } else {
+                    data.despesas = data.despesas.filter(i => i.id !== id);
+                }
+                saveData();
+            }
+        }
+
+        function editItem(type, id) {
+            const item = type === 'receita' 
+                ? data.receitas.find(i => i.id === id) 
+                : data.despesas.find(i => i.id === id);
+            
+            const newDesc = prompt("Nova descrição:", item.desc);
+            const newVal = prompt("Novo valor:", item.val);
+            
+            if (newDesc !== null && newVal !== null) {
+                item.desc = newDesc;
+                item.val = parseFloat(newVal);
+                saveData();
+            }
+        }
+
+        function togglePaga(id) {
+            const item = data.despesas.find(i => i.id === id);
+            item.paga = !item.paga;
+            saveData();
+        }
+
+        function formatCurrency(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function render() {
+            const listRec = document.getElementById('listaReceitas');
+            const listDesp = document.getElementById('listaDespesas');
+            const listPagas = document.getElementById('listaPagas');
+            
+            listRec.innerHTML = '';
+            listDesp.innerHTML = '';
+            listPagas.innerHTML = '';
+
+            let totalRec = 0;
+            let totalDesp = 0;
+
+            data.receitas.forEach(item => {
+                totalRec += item.val;
+                listRec.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-info">
+                            <strong>${item.desc}</strong><br>
+                            <span class="small-text">${formatCurrency(item.val)}</span>
+                        </div>
+                        <div class="item-actions">
+                            <i class="fas fa-edit" onclick="editItem('receita', ${item.id})"></i>
+                            <i class="fas fa-trash" onclick="deleteItem('receita', ${item.id})"></i>
+                        </div>
+                    </div>
+                `;
+            });
+
+            data.despesas.forEach(item => {
+                totalDesp += item.val;
+                const html = `
+                    <div class="item-card">
+                        <div class="item-info">
+                            <strong>${item.desc}</strong><br>
+                            <span class="small-text">${formatCurrency(item.val)}</span>
+                        </div>
+                        <div class="item-actions">
+                            <i class="fas ${item.paga ? 'fa-undo' : 'fa-check-circle'}" onclick="togglePaga(${item.id})" title="${item.paga ? 'Estornar' : 'Dar Baixa'}"></i>
+                            <i class="fas fa-edit" onclick="editItem('despesa', ${item.id})"></i>
+                            <i class="fas fa-trash" onclick="deleteItem('despesa', ${item.id})"></i>
+                        </div>
+                    </div>
+                `;
+                if (item.paga) listPagas.innerHTML += html;
+                else listDesp.innerHTML += html;
+            });
+
+            document.getElementById('totalRec').innerText = formatCurrency(totalRec);
+            document.getElementById('totalDesp').innerText = formatCurrency(totalDesp);
+            const saldo = totalRec - totalDesp;
+            document.getElementById('totalSaldo').innerText = formatCurrency(saldo);
+
+            // INTERACTIVE SPINNER LOGIC
+            const spinner = document.getElementById('spinner');
+            const percentText = document.getElementById('percentText');
+            const statusBadge = document.getElementById('statusBadge');
+            const recPercentText = document.getElementById('recPercent');
+            const despPercentText = document.getElementById('despPercent');
+            
+            const totalGeral = totalRec + totalDesp;
+            let pRec = 0;
+            let pDesp = 0;
+            let pComprometimento = 0;
+
+            if (totalGeral > 0) {
+                pRec = Math.round((totalRec / totalGeral) * 100);
+                pDesp = 100 - pRec;
+            }
+
+            if (totalRec > 0) {
+                pComprometimento = Math.min(Math.round((totalDesp / totalRec) * 100), 100);
+            } else if (totalDesp > 0) {
+                pComprometimento = 100;
+            }
+
+            // Update Spinner Background (Green for Revenue, Red for Expense)
+            spinner.style.background = `conic-gradient(var(--accent-green) ${pRec * 3.6}deg, var(--accent-red) 0deg)`;
+            
+            // Update Texts
+            percentText.innerText = `${pComprometimento}%`;
+            recPercentText.innerText = `${pRec}%`;
+            despPercentText.innerText = `${pDesp}%`;
+
+            // Update Status Badge
+            if (totalRec === 0 && totalDesp === 0) {
+                statusBadge.innerText = "Aguardando";
+                statusBadge.className = "status-badge";
+            } else if (saldo >= 0) {
+                statusBadge.innerText = "Superavitário";
+                statusBadge.className = "status-badge status-superavit";
+            } else {
+                statusBadge.innerText = "Deficitário";
+                statusBadge.className = "status-badge status-deficit";
+            }
+        }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'e-projetos-backup.json';
+            a.click();
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported.receitas && imported.despesas) {
+                        data = imported;
+                        saveData();
+                        alert("Dados importados com sucesso!");
+                    }
+                } catch (err) {
+                    alert("Erro ao importar arquivo JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
